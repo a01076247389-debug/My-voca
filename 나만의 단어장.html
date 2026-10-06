@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>나만의 단어장</title>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e6f5fb;--card:#fff;--ink:#17375e;--sub:#5d7a95;--sea:#3aa6d8;--coral:#ff8a72;--sand:#ffe8b8;--line:#c3e3f1;--soft:#f3fafd;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e2133;--card:#172f48;--ink:#e6f3fb;--sub:#9cb8cc;--sea:#5cc0ee;--coral:#ff9d88;--sand:#5a4a25;--line:#2a4a66;--soft:#12283d}}
+:root[data-theme="dark"]{--bg:#0e2133;--card:#172f48;--ink:#e6f3fb;--sub:#9cb8cc;--sea:#5cc0ee;--coral:#ff9d88;--sand:#5a4a25;--line:#2a4a66;--soft:#12283d}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 'Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',sans-serif;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
+h1,h2,h3,button,.en{font-family:'Jua','Gowun Dodum','Apple SD Gothic Neo',sans-serif;font-weight:400}
+h2{font-size:1.25rem;margin:22px 2px 10px}
+.wrap{max-width:560px;margin:0 auto;padding:14px 14px calc(96px + env(safe-area-inset-bottom,0px))}
+button{font-size:1rem;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+.hero{background:linear-gradient(160deg,#5cc0ee,#3aa6d8);color:#fff;border-radius:28px;padding:18px 18px 16px;position:relative;overflow:hidden}
+.hero h1{margin:0;font-size:1.8rem}
+.hero p{margin:4px 0 14px;max-width:72%;font-size:.95rem;opacity:.95}
+.hero svg{position:absolute;right:-6px;bottom:-4px;width:140px}
+.btn{background:var(--coral);color:#4a1c10;border-radius:999px;padding:12px 22px;min-height:48px;font-size:1.1rem;box-shadow:0 4px 0 rgba(0,0,0,.18)}
+.btn:active{transform:translateY(3px);box-shadow:none}
+.btn.alt{background:var(--card);color:var(--ink);border:2px solid var(--line);box-shadow:none}
+.btn.w{width:100%;margin-top:16px}
+.sum{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.sum div{background:var(--card);border:2px solid var(--line);border-radius:20px;text-align:center;padding:12px 4px}
+.sum b{display:block;font:1.7rem 'Jua',sans-serif;color:var(--sea)}
+.sum span{font-size:.85rem;color:var(--sub)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.chips{display:flex;gap:8px;overflow-x:auto;margin:0 -14px;padding:2px 14px 8px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;background:var(--c,var(--sand));color:#17375e;border-radius:999px;padding:8px 16px;min-height:42px;white-space:nowrap}
+.item{display:flex;align-items:center;gap:12px;background:var(--card);border:2px solid var(--line);border-radius:20px;padding:10px 12px;margin-bottom:10px}
+.dot{width:46px;height:46px;border-radius:16px;background:var(--c);display:grid;place-items:center;font-size:1.5rem;flex:none}
+.item .t{flex:1;min-width:0}
+.item .t b{font:1.15rem 'Jua',sans-serif;display:block;overflow:hidden;text-overflow:ellipsis}
+.item .t span{color:var(--sub);font-size:.9rem}
+.sm{padding:6px 12px;min-height:40px;border-radius:12px;background:var(--soft);border:2px solid var(--line);font-size:.9rem}
+.sm.red{color:var(--coral);border-color:var(--coral)}
+.box{background:var(--card);border:2px solid var(--line);border-radius:24px;padding:16px;box-shadow:0 5px 0 var(--line)}
+label{display:block;margin:12px 0 4px;color:var(--sub);font-size:.92rem}
+input,select,textarea{width:100%;font:16px 'Gowun Dodum',sans-serif;color:var(--ink);background:var(--soft);border:2px solid var(--line);border-radius:14px;padding:12px 14px;min-height:48px}
+textarea{min-height:90px}
+.pick{display:flex;flex-wrap:wrap;gap:8px}
+.pick button{width:46px;height:46px;border-radius:14px;background:var(--soft);border:2px solid var(--line);font-size:1.4rem}
+.pick button.on{border-color:var(--coral);background:var(--sand)}
+.pick.col button{background:var(--c);border-color:transparent}
+.pick.col button.on{border-color:var(--ink)}
+.bar{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+.bar select{flex:1;min-width:0}
+.ib{width:48px;height:48px;border-radius:16px;background:var(--card);border:2px solid var(--line);font-size:1.3rem;flex:none}
+.seg{display:flex;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:4px;margin-bottom:14px}
+.seg button{flex:1;padding:8px;border-radius:999px;color:var(--sub)}
+.seg .on{background:var(--sea);color:#fff}
+.scene{perspective:1000px;height:370px}
+.card{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d;cursor:pointer}
+.card.flip{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:30px;border:2px solid var(--line);background:var(--card);box-shadow:0 6px 0 var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;text-align:center;overflow:hidden}
+.back{transform:rotateY(180deg);background:var(--sand)}
+.art{width:170px;height:170px;border-radius:50%;background:var(--c);display:grid;place-items:center;font-size:5.2rem;position:relative;margin-bottom:14px}
+.art::before,.art::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.7)}
+.art::before{width:22px;height:22px;top:6px;right:-8px}.art::after{width:12px;height:12px;bottom:12px;left:-14px}
+.face .en{font-size:2rem;word-break:break-word;line-height:1.25}
+.face .hint{color:var(--sub);font-size:.85rem;margin-top:8px}
+.ko{font:1.7rem/1.45 'Jua',sans-serif;word-break:keep-all;white-space:pre-wrap}
+.tag{display:inline-block;background:var(--c);color:#17375e;border-radius:999px;padding:0 12px;font-size:.85rem;margin-bottom:12px}
+.nav2{display:flex;align-items:center;justify-content:space-between;margin-top:20px}
+.nav2 span{font:1.15rem 'Jua',sans-serif;color:var(--sub)}
+.menu{position:absolute;right:14px;margin-top:-2px;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:6px;z-index:5;display:flex;flex-direction:column;gap:4px}
+.empty{text-align:center;color:var(--sub);padding:30px 10px}
+.empty svg{width:120px}
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--card);border-top:2px solid var(--line);padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center}
+.tabs div{display:flex;width:100%;max-width:560px;gap:4px}
+.tab{flex:1;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:.8rem;color:var(--sub);border-radius:16px;font-family:'Gowun Dodum',sans-serif}
+.tab i{font-style:normal;font-size:1.3rem;line-height:1;padding:3px 16px;border-radius:999px}
+.tab.on{color:var(--sea)}.tab.on i{background:var(--sand)}
+.toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;z-index:30;font-size:.95rem;max-width:90%;text-align:center}
+@media (prefers-reduced-motion:reduce){.card{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<nav class="tabs" aria-label="하단 메뉴"><div>
+<button class="tab" data-a="go" data-v="home"><i>🏠</i>홈</button>
+<button class="tab" data-a="go" data-v="study"><i>📖</i>단어장</button>
+<button class="tab" data-a="go" data-v="add"><i>✏️</i>단어등록</button>
+<button class="tab" data-a="go" data-v="marks"><i>🔖</i>책갈피</button>
+</div></nav>
+<script>
+const ICONS=['🫀','🫁','🧠','🦴','💊','🩸','🧪','🩺','🦷','👁️','🧬','🌡️'];
+const COLORS=['#7fd1f0','#ffb4a2','#ffd98a','#b8e6b0','#c9b6f2','#ffb8d4'];
+const WHALE='<svg viewBox="0 0 140 90"><path d="M64 14c-2-8 4-12 8-10-1 4 4 6 4 10z" fill="#bfe9fb"/><path d="M8 54C8 30 30 16 62 16c30 0 52 14 58 34 2 8-1 14-8 16 6-2 14-10 20-12-2 14-12 22-26 20-10 14-26 20-48 20C28 94 8 78 8 54z" fill="#17375e" opacity=".9"/><path d="M14 58c8 14 28 20 52 18 22-2 38-10 46-22-10 6-28 8-50 8-22 0-38-2-48-4z" fill="#fff" opacity=".9"/><circle cx="34" cy="46" r="4" fill="#fff"/><circle cx="35" cy="46" r="2" fill="#17375e"/><circle cx="46" cy="58" r="3" fill="#ff8a72" opacity=".7"/></svg>';
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const today=(o=0)=>{const d=new Date();d.setDate(d.getDate()-o);return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
+let S,view='home',study={mark:'all',sort:'mark',i:0,flip:false,menu:false},editId=null,lastMark=null,ask=null;
+let mEdit={id:null,name:'',color:COLORS[0],icon:ICONS[0]};
+
+function seed(){
+  const m=[['m1','심장','#ffb4a2','🫀'],['m2','호흡','#7fd1f0','🫁'],['m3','약물','#ffd98a','💊']].map(a=>({id:a[0],name:a[1],color:a[2],icon:a[3]}));
+  const w=[['m1','tachycardia','빈맥\n(심박수가 비정상적으로 빠름)',0],['m1','bradycardia','서맥\n(심박수가 비정상적으로 느림)',0],['m1','arrhythmia','부정맥',1],['m1','myocardial infarction','심근경색',2],
+  ['m2','dyspnea','호흡곤란',0],['m2','cyanosis','청색증',1],['m2','hypoxia','저산소증',3],
+  ['m3','analgesic','진통제',1],['m3','antipyretic','해열제',2],['m3','diuretic','이뇨제',0]]
+  .map((a,i)=>({id:'w'+i,mark:a[0],en:a[1],ko:a[2],date:today(a[3]),t:Date.now()-i*1000}));
+  return {marks:m,words:w};
+}
+try{S=JSON.parse(localStorage.getItem('mywordbook')||'null')}catch(e){}
+if(!S||!S.marks)S=seed();
+const save=()=>{try{localStorage.setItem('mywordbook',JSON.stringify(S))}catch(e){}};
+(function(){
+  S.packs=S.packs||[];
+  const PACKS=[
+   {k:'circ',name:'순환계',color:'#ffb8d4',icon:'🩸',w:[['myocardium','심근'],['endocardium','심내막'],['pericardium','심낭'],['atrium','심방'],['ventricle','심실'],['aorta','대동맥'],['vena cava','대정맥'],['coronary artery','관상동맥'],['cardiac output','심박출량'],['hypertension','고혈압'],['hypotension','저혈압'],['angina pectoris','협심증'],['ischemia','허혈'],['thrombosis','혈전증'],['embolism','색전증'],['edema','부종']]},
+   {k:'skin',name:'피부계통',color:'#b8e6b0',icon:'🧴',w:[['epidermis','표피'],['dermis','진피'],['subcutaneous tissue','피하조직'],['sebaceous gland','피지샘'],['sweat gland','땀샘'],['keratin','케라틴 (각질 단백질)'],['melanin','멜라닌 (피부 색소)'],['pruritus','가려움증'],['erythema','홍반 (피부가 붉어짐)'],['rash','발진'],['urticaria','두드러기'],['jaundice','황달'],['pallor','창백'],['diaphoresis','발한 (과도한 땀)'],['skin turgor','피부긴장도'],['wound','상처'],['laceration','열상 (찢어진 상처)'],['abrasion','찰과상'],['contusion','타박상 (멍)'],['pressure ulcer','욕창'],['cellulitis','연조직염'],['dermatitis','피부염'],['eczema','습진'],['burn','화상']]}
+   ,{k:'suf',name:'접미사',color:'#c9b6f2',icon:'🔤',w:"-itis|염증 (예: gastritis 위염);-ectomy|절제술 (예: appendectomy 충수절제술);-ostomy|개구술·누공 형성 (예: colostomy 결장루);-otomy|절개술 (예: thoracotomy 개흉술);-plasty|성형술;-scopy|내시경 검사 (예: gastroscopy);-graphy|촬영술 (예: angiography);-gram|촬영한 사진·기록 (예: electrocardiogram);-emia|혈액 상태 (예: anemia 빈혈);-algia|통증 (예: neuralgia 신경통);-pathy|질환 (예: neuropathy);-osis|병적 상태 (예: cyanosis);-megaly|비대 (예: cardiomegaly);-penia|감소 (예: leukopenia);-rrhea|흐름·유출 (예: diarrhea);-rrhagia|과다 출혈·유출;-oma|종양 (예: lymphoma 림프종);-plegia|마비 (예: hemiplegia);-uria|소변 상태 (예: hematuria 혈뇨);-pnea|호흡 (예: dyspnea);-lysis|분해·파괴 (예: hemolysis 용혈)"}
+   ,{k:'pre',name:'접두사',color:'#ffd98a',icon:'🧩',w:"hyper-|과다·지나친 (예: hypertension);hypo-|저하·부족 (예: hypotension);tachy-|빠른 (예: tachycardia);brady-|느린 (예: bradycardia);dys-|이상·곤란 (예: dyspnea);a- / an-|없는·결핍 (예: anemia);anti-|반대·방지 (예: antipyretic);poly-|많은 (예: polyuria 다뇨);oligo-|적은 (예: oliguria 소변감소);hemi-|반쪽 (예: hemiplegia);inter-|사이 (예: intercostal 갈비사이);intra-|내부 (예: intravenous);peri-|주위 (예: pericardium);endo-|안쪽 (예: endocardium);epi-|위·겉 (예: epidermis);sub-|아래 (예: subcutaneous);supra-|위쪽 (예: suprapubic 두덩위);hemo-|혈액 (예: hemoglobin);neo-|새로운 (예: neoplasm);trans-|가로질러 (예: transfusion)"}
+   ,{k:'onc',name:'종양학',color:'#ffb8d4',icon:'🎗️',w:"tumor|종양;benign|양성의;malignant|악성의;metastasis|전이;carcinoma|암종 (상피 세포에서 생긴 암);sarcoma|육종 (뼈·근육 등에서 생긴 암);lymphoma|림프종;leukemia|백혈병;neoplasm|신생물;biopsy|조직검사 (생검);staging|병기 결정;grading|암세포 등급 분류;remission|관해 (증상이 줄거나 사라짐);recurrence|재발;chemotherapy|항암화학요법;radiation therapy|방사선 치료;oncologist|종양 전문의;prognosis|예후;palliative care|완화 돌봄;carcinogen|발암물질;in situ|상피내 (제자리에 머무는 상태);hospice|호스피스"}
+   ,{k:'dir',name:'방향',color:'#7fd1f0',icon:'🧭',w:"anterior|앞쪽 (= ventral 배쪽);posterior|뒤쪽 (= dorsal 등쪽);superior|위쪽 (머리 쪽);inferior|아래쪽 (발 쪽);medial|안쪽 (정중선에 가까움);lateral|가쪽 (정중선에서 멂);proximal|몸쪽 (몸통에 가까움);distal|먼쪽 (몸통에서 멂);superficial|표재성 (표면에 가까움);deep|깊은;cranial|머리쪽;caudal|꼬리쪽;ipsilateral|같은 쪽;contralateral|반대쪽;bilateral|양쪽;unilateral|한쪽;sagittal plane|시상면 (좌우로 나눔);coronal plane|관상면 (앞뒤로 나눔);transverse plane|가로면 (위아래로 나눔);midline|정중선"}
+   ,{k:'pos',name:'체위',color:'#b8e6b0',icon:'🛏️',w:"supine position|바로 누운 자세 (앙와위);prone position|엎드린 자세 (복위);lateral recumbent position|옆으로 누운 자세 (측위);Fowler's position|파울러 체위 (상체를 45~60° 올림);semi-Fowler's position|반좌위 (상체를 30~45° 올림);high Fowler's position|좌위 (상체를 60~90° 올림);Sims' position|심스 체위 (반쯤 엎드려 옆으로 누움);Trendelenburg position|트렌델렌버그 체위 (머리를 낮추고 다리를 높임);reverse Trendelenburg position|역 트렌델렌버그 체위 (머리를 높이고 다리를 낮춤);lithotomy position|쇄석위 (누워서 무릎을 굽혀 다리를 벌림);knee-chest position|슬흉위 (무릎과 가슴을 대고 엎드림);dorsal recumbent position|배횡와위 (누워서 무릎을 세움);orthopneic position|기좌호흡 체위 (앞으로 기대어 앉음);recovery position|회복 체위 (옆으로 눕혀 기도 확보)"}
+   ,{k:'img',name:'영상용어',color:'#ffb4a2',icon:'📷',w:"X-ray|엑스선 검사;CT (computed tomography)|컴퓨터단층촬영;MRI (magnetic resonance imaging)|자기공명영상;ultrasound|초음파 검사;PET (positron emission tomography)|양전자방출단층촬영;mammography|유방촬영술;angiography|혈관조영술;fluoroscopy|투시검사;echocardiography|심초음파 검사;contrast medium|조영제;radiopaque|방사선 불투과성 (영상에서 하얗게 보임);radiolucent|방사선 투과성 (영상에서 검게 보임);barium swallow|바륨 삼킴검사 (식도·위 조영);bone scan|골 스캔;DEXA|골밀도 검사;lesion|병변;radiograph|방사선 사진;nuclear medicine|핵의학"}
+   ,{k:'cv',name:'심장혈관계통',color:'#ffcf9e',icon:'❤️',w:"cardiomegaly|심장비대;cardiomyopathy|심근병증;myocarditis|심근염;endocarditis|심내막염;pericarditis|심낭염;heart failure|심부전;cardiac arrest|심정지;murmur|심잡음;palpitation|심계항진 (두근거림);mitral valve|승모판;tricuspid valve|삼첨판;aortic valve|대동맥판;pulmonary valve|폐동맥판;stenosis|협착;atherosclerosis|죽상동맥경화증;aneurysm|동맥류;varicose vein|정맥류;phlebitis|정맥염;ECG (electrocardiogram)|심전도;pacemaker|심박동기;defibrillation|제세동;shock|쇼크"}
+   ,{k:'heme',name:'혈액및림프계통',color:'#ff9aa9',icon:'🧫',w:"erythrocyte|적혈구;leukocyte|백혈구;thrombocyte|혈소판 (= platelet);hemoglobin|혈색소;hematocrit|적혈구용적률;plasma|혈장;serum|혈청;anemia|빈혈;leukopenia|백혈구감소증;leukocytosis|백혈구증가증;thrombocytopenia|혈소판감소증;hemophilia|혈우병;coagulation|응고;hemostasis|지혈;hemolysis|용혈;transfusion|수혈;bone marrow|골수;lymph node|림프절;lymphedema|림프부종;spleen|비장;thymus|흉선;antibody|항체;antigen|항원"}
+   ,{k:'gi',name:'소화계통',color:'#f5c6a5',icon:'🍽️',w:"esophagus|식도;stomach|위;duodenum|십이지장;jejunum|공장;ileum|회장;colon|결장;rectum|직장;liver|간;gallbladder|담낭;pancreas|췌장;appendix|충수;bile|담즙;peristalsis|연동운동;dysphagia|삼킴곤란;gastritis|위염;hepatitis|간염;cirrhosis|간경변;cholecystitis|담낭염;appendicitis|충수염;constipation|변비;diarrhea|설사;melena|흑색변;hematemesis|토혈;ascites|복수;hernia|탈장;colostomy|결장루;enema|관장;nasogastric tube|비위관;bowel sounds|장음;abdominal distention|복부팽만"}
+  ];
+  PACKS.forEach(P=>{
+    const L=typeof P.w==='string'?P.w.split(';').map(x=>x.split('|')):P.w;
+    if(S.packs.includes(P.k))return;
+    let m=S.marks.find(x=>x.name===P.name);
+    if(!m){m={id:'m'+P.k+Date.now(),name:P.name,color:P.color,icon:P.icon};S.marks.push(m)}
+    const have=new Set(S.words.filter(w=>w.mark===m.id).map(w=>w.en.toLowerCase()));
+    L.forEach((a,i)=>{if(!have.has(a[0]))S.words.push({id:P.k+i+Date.now(),mark:m.id,en:a[0],ko:a[1],date:today(),t:Date.now()+i})});
+    S.packs.push(P.k);
+  });
+  save();
+})();
+const mk=id=>S.marks.find(m=>m.id===id);
+function toast(t){const o=$('.toast');o&&o.remove();const e=document.createElement('div');e.className='toast';e.textContent=t;e.setAttribute('role','status');document.body.appendChild(e);setTimeout(()=>e.remove(),2200)}
+const cnt=id=>S.words.filter(w=>w.mark===id).length;
+
+function list(){
+  let l=S.words.filter(w=>study.mark==='all'||w.mark===study.mark);
+  const idx=id=>S.marks.findIndex(m=>m.id===id);
+  l.sort(study.sort==='mark'?(a,b)=>idx(a.mark)-idx(b.mark)||a.t-b.t:(a,b)=>b.date.localeCompare(a.date)||b.t-a.t);
+  return l;
+}
+const art=m=>`<div class="art" style="--c:${m.color}">${m.icon}</div>`;
+
+function vHome(){
+  const td=S.words.filter(w=>w.date===today()).length;
+  const rec=S.words.slice().sort((a,b)=>b.t-a.t).slice(0,5);
+  return `<div class="hero"><h1>나만의 단어장</h1><p>잘 외워지지 않는 의학용어를 책갈피별로 모아 두고, 버스에서나 쉬는 시간에 카드로 넘겨 보세요.</p><button class="btn" data-a="study" data-v="all">단어장 펼치기</button>${WHALE}</div>
+  <div class="sum"><div><b>${S.words.length}</b><span>전체 단어</span></div><div><b>${S.marks.length}</b><span>책갈피</span></div><div><b>${td}</b><span>오늘 등록</span></div></div>
+  <h2>🔖 책갈피 <button class="sm" data-a="go" data-v="marks" style="float:right">관리</button></h2>
+  ${S.marks.length?`<div class="chips">${S.marks.map(m=>`<button class="chip" style="--c:${m.color}" data-a="study" data-v="${m.id}">${m.icon} ${esc(m.name)} ${cnt(m.id)}</button>`).join('')}</div>`:'<div class="empty">아직 책갈피가 없어요.</div>'}
+  <h2>🆕 최근 등록 단어</h2>
+  ${rec.length?rec.map(w=>{const m=mk(w.mark)||{color:'#ccc',icon:'📌'};return `<div class="item"><div class="dot" style="--c:${m.color}">${m.icon}</div><div class="t"><b>${esc(w.en)}</b><span>${esc(w.ko.split('\n')[0])}</span></div></div>`}).join(''):'<div class="empty">첫 단어를 등록해 보세요!</div>'}
+  <button class="btn w" data-a="go" data-v="add">+ 단어 등록하기</button>`;
+}
+function vStudy(){
+  const l=list();if(study.i>=l.length)study.i=0;const w=l[study.i];
+  let h=`<div class="bar"><select id="smark" aria-label="책갈피 선택"><option value="all">전체 책갈피</option>${S.marks.map(m=>`<option value="${m.id}" ${study.mark===m.id?'selected':''}>${m.icon} ${esc(m.name)}</option>`).join('')}</select><button class="ib" data-a="speak" aria-label="음성 재생">🔊</button></div>
+  <div class="seg"><button class="${study.sort==='mark'?'on':''}" data-a="sort" data-v="mark">책갈피순</button><button class="${study.sort==='date'?'on':''}" data-a="sort" data-v="date">등록일순</button></div>`;
+  if(!w)return h+`<div class="empty">${WHALE}<br>이 책갈피에는 단어가 없어요.<br><button class="btn" style="margin-top:12px" data-a="go" data-v="add">단어 등록하기</button></div>`;
+  const m=mk(w.mark)||{color:'#ccc',icon:'📌',name:'-'};
+  return h+`<div class="scene"><div class="card ${study.flip?'flip':''}" data-a="flip" id="card">
+  <div class="face front">${art(m)}<div class="en">${esc(w.en)}</div><div class="hint">탭해서 뒤집기 · 영어 → 한글</div></div>
+  <div class="face back"><span class="tag" style="--c:${m.color}">${m.icon} ${esc(m.name)}</span><div class="ko">${esc(w.ko)}</div><div class="hint">등록일 ${w.date}</div></div></div></div>
+  <div class="nav2"><button class="btn alt" data-a="prev">◀ 이전</button><span>${study.i+1} / ${l.length}</span><button class="btn alt" data-a="next">다음 ▶</button></div>
+  <div class="row" style="justify-content:center;margin-top:16px"><button class="sm" data-a="edit" data-v="${w.id}">✏️ 수정</button><button class="sm red" data-a="del" data-v="${w.id}">${ask==='w'+w.id?'한 번 더 눌러 삭제':'🗑 삭제'}</button></div>`;
+}
+function vAdd(){
+  if(!S.marks.length)return `<h2>✏️ 단어 등록</h2><div class="empty">먼저 책갈피를 만들어 주세요.<br><button class="btn" style="margin-top:12px" data-a="go" data-v="marks">책갈피 만들기</button></div>`;
+  const w=editId?S.words.find(x=>x.id===editId):null;
+  const sel=w?w.mark:(lastMark&&mk(lastMark)?lastMark:S.marks[0].id);
+  return `<h2>${w?'✏️ 단어 수정':'✏️ 단어 등록'}</h2><div class="box">
+  <label for="fm" style="margin-top:0">책갈피 (분류)</label><select id="fm">${S.marks.map(m=>`<option value="${m.id}" ${sel===m.id?'selected':''}>${m.icon} ${esc(m.name)}</option>`).join('')}</select>
+  <label for="fen">단어 (영어)</label><input id="fen" value="${w?esc(w.en):''}" placeholder="예) tachycardia" autocomplete="off" autocapitalize="off">
+  <label for="fko">설명 (한글)</label><textarea id="fko" placeholder="예) 빈맥 – 심박수가 빠른 상태">${w?esc(w.ko):''}</textarea>
+  <label for="fd">등록일</label><input id="fd" type="date" value="${w?w.date:today()}">
+  <button class="btn w" data-a="saveWord">${w?'수정 저장':'단어 저장'}</button>${w?'<button class="btn alt w" data-a="go" data-v="study">취소</button>':''}</div>`;
+}
+function vMarks(){
+  const e=mEdit;
+  return `<h2>🔖 책갈피 관리</h2>${S.marks.map(m=>`<div class="item"><div class="dot" style="--c:${m.color}">${m.icon}</div><div class="t"><b>${esc(m.name)}</b><span>단어 ${cnt(m.id)}개</span></div><button class="sm" data-a="medit" data-v="${m.id}">수정</button><button class="sm red" data-a="mdel" data-v="${m.id}">${ask==='m'+m.id?'정말?':'삭제'}</button></div>`).join('')||'<div class="empty">책갈피가 없어요.</div>'}
+  <div class="box" id="mform"><h3 style="margin:0">${e.id?'책갈피 수정':'새 책갈피'}</h3>
+  <label for="mname">이름</label><input id="mname" value="${esc(e.name)}" placeholder="예) 순환기계" autocomplete="off">
+  <label>색</label><div class="pick col">${COLORS.map(c=>`<button style="--c:${c}" class="${e.color===c?'on':''}" data-a="mpick" data-k="color" data-v="${c}" aria-label="색 ${c}"></button>`).join('')}</div>
+  <label>삽화</label><div class="pick">${ICONS.map(c=>`<button class="${e.icon===c?'on':''}" data-a="mpick" data-k="icon" data-v="${c}">${c}</button>`).join('')}</div>
+  <button class="btn w" data-a="msave">${e.id?'수정 저장':'책갈피 추가'}</button>${e.id?'<button class="btn alt w" data-a="mcancel">취소</button>':''}</div>
+  <h2>💾 백업</h2><div class="box"><p style="margin:0 0 8px;color:var(--sub);font-size:.9rem">다른 기기로 옮기려면 내보내기 한 글자를 복사해 두었다가 가져오기에 붙여 넣으세요.</p><textarea id="bk" placeholder="여기에 백업 텍스트"></textarea><div class="row" style="margin-top:10px"><button class="sm" data-a="export">내보내기</button><button class="sm ${ask==='imp'?'red':''}" data-a="import">${ask==='imp'?'한 번 더 눌러 덮어쓰기':'가져오기'}</button></div></div>`;
+}
+function draw(){
+  $('#app').innerHTML={home:vHome,study:vStudy,add:vAdd,marks:vMarks}[view]();
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.v===view));
+}
+const go=v=>{view=v;if(v!=='add')editId=null;ask=null;draw();scrollTo(0,0)};
+const syncM=()=>{const n=$('#mname');if(n)mEdit.name=n.value};
+const act={
+  go,
+  study(v){study.mark=v;study.i=0;study.flip=false;go('study')},
+  flip(){study.flip=!study.flip;$('#card').classList.toggle('flip',study.flip)},
+  next(){const n=list().length;if(n){study.i=(study.i+1)%n;study.flip=false;draw()}},
+  prev(){const n=list().length;if(n){study.i=(study.i-1+n)%n;study.flip=false;draw()}},
+  sort(v){study.sort=v;study.i=0;draw()},
+  speak(){const w=list()[study.i];if(!w)return;
+    if(!('speechSynthesis' in window)){toast('이 브라우저는 음성 재생을 지원하지 않아요');return}
+    speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(w.en);u.lang='en-US';u.rate=.85;speechSynthesis.speak(u)},
+  edit(v){editId=v;view='add';draw();scrollTo(0,0)},
+  del(v){if(ask!=='w'+v){ask='w'+v;draw();return}S.words=S.words.filter(w=>w.id!==v);ask=null;save();draw();toast('삭제했어요')},
+  saveWord(){const m=$('#fm').value,en=$('#fen').value.trim(),ko=$('#fko').value.trim(),d=$('#fd').value||today();
+    if(!en||!ko){toast('단어와 설명을 모두 입력해 주세요');return}
+    lastMark=m;
+    if(editId){Object.assign(S.words.find(w=>w.id===editId),{mark:m,en,ko,date:d});save();toast('수정했어요');study.mark='all';go('study');return}
+    S.words.push({id:'w'+Date.now(),mark:m,en,ko,date:d,t:Date.now()});save();toast('✅ 저장했어요!');draw();$('#fen').focus()},
+  mpick(v,t){syncM();mEdit[t.dataset.k]=v;draw()},
+  medit(v){mEdit={...mk(v)};draw();$('#mform').scrollIntoView({behavior:'smooth'})},
+  mcancel(){mEdit={id:null,name:'',color:COLORS[0],icon:ICONS[0]};draw()},
+  msave(){syncM();const n=mEdit.name.trim();if(!n){toast('책갈피 이름을 입력해 주세요');return}
+    if(mEdit.id)Object.assign(mk(mEdit.id),{name:n,color:mEdit.color,icon:mEdit.icon});else S.marks.push({id:'m'+Date.now(),name:n,color:mEdit.color,icon:mEdit.icon});
+    save();toast('저장했어요');act.mcancel()},
+  mdel(v){if(ask!=='m'+v){ask='m'+v;toast('이 책갈피의 단어 '+cnt(v)+'개도 함께 삭제돼요. 한 번 더 눌러 주세요');draw();return}
+    S.marks=S.marks.filter(m=>m.id!==v);S.words=S.words.filter(w=>w.mark!==v);if(study.mark===v)study.mark='all';ask=null;save();draw()},
+  export(){const b=$('#bk');b.value=JSON.stringify(S);b.select();try{navigator.clipboard.writeText(b.value);toast('복사했어요')}catch(e){toast('텍스트를 직접 복사해 주세요')}},
+  import(){const b=$('#bk').value.trim();if(!b){toast('붙여 넣을 백업 텍스트가 없어요');return}
+    if(ask!=='imp'){ask='imp';draw();$('#bk').value=b;return}
+    try{const d=JSON.parse(b);if(!Array.isArray(d.marks)||!Array.isArray(d.words))throw 0;S=d;save();ask=null;draw();toast('가져왔어요')}catch(e){ask=null;draw();toast('백업 형식이 올바르지 않아요')}}
+};
+document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t)return;const a=act[t.dataset.a];a&&a(t.dataset.v,t)});
+document.addEventListener('change',e=>{if(e.target.id==='smark'){study.mark=e.target.value;study.i=0;study.flip=false;draw()}});
+let sx=null;
+document.addEventListener('touchstart',e=>{sx=view==='study'?e.touches[0].clientX:null},{passive:true});
+document.addEventListener('touchend',e=>{if(sx==null)return;const dx=e.changedTouches[0].clientX-sx;sx=null;if(Math.abs(dx)>60)dx<0?act.next():act.prev()},{passive:true});
+draw();
+</script>
+</body>
+</html>
